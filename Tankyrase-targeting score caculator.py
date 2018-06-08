@@ -61,19 +61,19 @@ def CalTTS(sProteinSeq):
 
 def main():
 
-    # MsProteins.fasta should contain all protein sequences of your organism of interest in the Uniprot database.
-    InFile = open("MsProteins.fasta", "r")
+    # UniProteins.fasta should contain all protein sequences of your organism of interest in the Uniprot database.
+    InFile = open("UniProteins.fasta", "r")
     
-    sMsProteinEntryList = []
-    sMsProteinNameDic = {}
-    sMsProteinSeqDic = {}
+    sUniProteinEntryList = []
+    sUniProteinNameDic = {}
+    sUniProteinSeqDic = {}
     nProteinNum = 0
 
     for sReadLine in InFile.readlines():
 
         if sReadLine[0] == ">":
 
-            sMsProteinEntryList.append(sReadLine[4:10])
+            sUniProteinEntryList.append(sReadLine[4:10])
             sString = sReadLine[11:]
             sProteinName = ""
 
@@ -87,7 +87,7 @@ def main():
 
                     sProteinName += cChar
 
-            sMsProteinNameDic[sMsProteinEntryList[nProteinNum]] = sProteinName
+            sUniProteinNameDic[sUniProteinEntryList[nProteinNum]] = sProteinName
 
             nProteinNum += 1
 
@@ -95,38 +95,38 @@ def main():
 
             try:
 
-                sMsProteinSeqDic[sMsProteinEntryList[nProteinNum - 1]] += sReadLine.replace("\n", "")
+                sUniProteinSeqDic[sUniProteinEntryList[nProteinNum - 1]] += sReadLine.replace("\n", "")
 
             except:
 
-                sMsProteinSeqDic[sMsProteinEntryList[nProteinNum - 1]] = sReadLine.replace("\n", "")
+                sUniProteinSeqDic[sUniProteinEntryList[nProteinNum - 1]] = sReadLine.replace("\n", "")
 
     InFile.close()
 
-    # IdentifiedProteins.txt should contain Uniprot Accession Numbers of your identified tankyrase-binding proteins.
-    InFile = open("IdentifiedProteins.txt", "r")
+    # MyProteins.txt should contain Uniprot Accession Numbers of your proteins of interest.
+    InFile = open("MyProteins.txt", "r")
 
     for sReadLine in InFile.readlines():
 
         sEntry = sReadLine[0:6]
 
-        fMaxTTS, fMaxPos, sMaxSeq = CalTTS(sMsProteinSeqDic[sEntry])
+        fMaxTTS, fMaxPos, sMaxSeq = CalTTS(sUniProteinSeqDic[sEntry])
 
-        print(sEntry, sMsProteinNameDic[sEntry], fMaxTTS, fMaxPos, sMaxSeq)
+        print(sEntry, sUniProteinNameDic[sEntry], fMaxTTS, fMaxPos, sMaxSeq)
 
         for nPos in range(8):
 
             print(sAminoAcidDic[sMaxSeq[nPos]][nPos])
 
-        if "U" in sMsProteinSeqDic[sEntry]:
+        if "U" in sUniProteinSeqDic[sEntry]:
 
             print("U is in this protein seq.\n")
 
-        if "X" in sMsProteinSeqDic[sEntry]:
+        if "X" in sUniProteinSeqDic[sEntry]:
 
             print("X is in this protein seq.\n")
 
-        if "B" in sMsProteinSeqDic[sEntry]:
+        if "B" in sUniProteinSeqDic[sEntry]:
 
             print("B is in this protein seq.\n")
 
