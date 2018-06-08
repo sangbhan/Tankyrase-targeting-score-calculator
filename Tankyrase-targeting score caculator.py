@@ -61,7 +61,7 @@ def CalTTS(sProteinSeq):
 
 def main():
 
-    # MsProteins.fasta contains all protein sequences in the mouse Uniprot database (release 08-Jun-2016).
+    # MsProteins.fasta should contain all protein sequences of your organism of interest in the Uniprot database.
     InFile = open("MsProteins.fasta", "r")
     
     sMsProteinEntryList = []
@@ -103,7 +103,7 @@ def main():
 
     InFile.close()
 
-    # IdentifiedProteins.txt contains Uniprot Accession Numbers of the identified tankyrase-binding proteins.
+    # IdentifiedProteins.txt should contain Uniprot Accession Numbers of your identified tankyrase-binding proteins.
     InFile = open("IdentifiedProteins.txt", "r")
 
     for sReadLine in InFile.readlines():
